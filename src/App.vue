@@ -22,7 +22,7 @@ export default {
     const store = useStore();
 
     onBeforeMount(() => {
-      store.dispatch("tryLogin");
+      store.dispatch("auth/tryLogin");
     });
   },
 };

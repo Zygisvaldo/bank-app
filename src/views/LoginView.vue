@@ -41,7 +41,7 @@
 
 <script>
 import { useStore } from "vuex";
-import { reactive, ref, defineComponent  } from "vue";
+import { reactive, ref, defineComponent } from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import { email, required } from "@vuelidate/validators";
 import { useRouter } from "vue-router";
@@ -77,7 +77,7 @@ export default defineComponent({
         warning.value = false;
         isLoading.value = true;
         try {
-          await store.dispatch("login", state);
+          await store.dispatch("auth/login", state);
           router.push("/");
         } catch (error) {
           if (error) {

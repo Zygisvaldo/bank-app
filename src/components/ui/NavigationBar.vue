@@ -59,7 +59,7 @@ export default {
   setup() {
     const store = useStore();
     const userIsLoogedIn = computed(function () {
-      return store.getters.isLoggedIn;
+      return store.getters["auth/isLoggedIn"];
     });
     const navigationOptionsGeneral = reactive([
       {
@@ -95,7 +95,7 @@ export default {
       return (navIsOpen.value = !navIsOpen.value);
     }
     function logOut() {
-      store.dispatch("logout");
+      store.dispatch("auth/logout");
     }
 
     return {

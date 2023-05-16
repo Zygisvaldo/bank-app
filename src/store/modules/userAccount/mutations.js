@@ -1,1 +1,5 @@
-export default {};
+export default {
+  setUserMovements(state, payload) {
+    state.movements = payload
+  },
+};

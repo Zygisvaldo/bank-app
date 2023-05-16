@@ -43,7 +43,7 @@ export default {
       localStorage.setItem("tokenExpiration", expirationDate);
 
       timer = setTimeout(function () {
-        console.log('logging out');
+        console.log("logging out");
         context.dispatch("autoLogout");
       }, expiresIn);
 
@@ -59,6 +59,8 @@ export default {
         error.response.data.error.message || "Failed to authenticate.";
       throw new Error(errorMessage);
     }
+    context.dispatch("user/loadUserMovements", null, { root: true });
+    console.log("user movements set");
   },
   tryLogin(context) {
     const token = localStorage.getItem("token");
@@ -81,7 +83,6 @@ export default {
         userId: userId,
         loggedIn: true,
       });
-      console.log("lol");
     }
   },
 
