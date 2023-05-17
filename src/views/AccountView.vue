@@ -1,59 +1,55 @@
 <template>
-  <v-card class="mx-auto" width="1000">
-    <v-row no-gutters align="center" justify="center" style="width;: 100%">
-      <v-col cols="12" lg="4" xl="4">
-        <v-row no-gutters>
-          <div class="component-container">
-            <BankLoan />
-          </div>
-        </v-row>
-      </v-col>
-      <v-col cols="12" lg="4" xl="4">
-        <v-row no-gutters>
-          <div class="component-container">
-            <BankTransfer />
-          </div>
-        </v-row>
-      </v-col>
-      <v-col cols="12" lg="4" xl="4">
-        <v-row no-gutters>
-          <div class="component-container">
-            <BankAccountClose />
-          </div>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-card>
-  <br />
-  <v-card>
+  <v-container class="ma-3">
     <v-btn
-      color="primary"
+      class="ma-3"
       @click="
-        loadData();
         toggleMovements();
+        loadData();
       "
-      >{{ buttonName }} account movements</v-btn
+      :loading="loading"
+      >{{ buttonName }} account information</v-btn
     >
-    <v-table>
-      <thead>
-        <tr>
-          <th class="text-left">Date of transfer</th>
-          <th class="text-left">Amount</th>
-        </tr>
-      </thead>
-      <tbody v-if="show">
-        <tr v-for="item in userMovements" :key="item.name">
-          <td>{{ item.date }}</td>
-          <td>{{ item.amount }} €</td>
-        </tr>
-      </tbody>
-    </v-table>
-  </v-card>
-</template>
+    <v-card v-if="show" class="ma-3 pa-5"><UserBalance /></v-card>
 
+    <v-card v-if="show" class="ma-3 pa-2">
+      <v-row no-gutters>
+        <v-col class="ma-4" cols="12" lg="8" xl="8">
+          <v-data-table
+            v-model:items-per-page="itemsPerPage"
+            :headers="headers"
+            :items="userMovements"
+            item-value="name"
+            class="elevation-1"
+            hide-actions
+            hide-default-footer
+          >
+          </v-data-table>
+        </v-col>
+        <v-col class="ma-2" cols="8" lg="3" xl="3">
+          <v-row class="ma-3" no-gutters>
+            <div class="component-container">
+              <BankLoan class="bg-green-lighten-3 text-black" />
+            </div>
+          </v-row>
+          <v-row class="ma-3 gray" no-gutters>
+            <div class="component-container">
+              <BankTransfer class="bg-yellow-lighten-3 text-black" />
+            </div>
+          </v-row>
+          <v-row class="ma-3 gray" no-gutters>
+            <div class="component-container">
+              <BankAccountClose class="bg-red-lighten-2 text-black" />
+            </div>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-card>
+  </v-container>
+</template>
 <script>
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
+import UserBalance from "../components/userAccountOptions/UserBalance.vue";
 import BankLoan from "../components/userAccountOptions/BankLoan.vue";
 import BankTransfer from "../components/userAccountOptions/BankTransfer.vue";
 import BankAccountClose from "../components/userAccountOptions/BankAccountClose.vue";
@@ -62,9 +58,11 @@ export default {
     BankLoan,
     BankTransfer,
     BankAccountClose,
+    UserBalance,
   },
   setup() {
     const show = ref(false);
+    const loading = ref(false);
     const buttonName = computed(function () {
       if (show.value) {
         return "Hide";
@@ -75,20 +73,27 @@ export default {
     function toggleMovements() {
       show.value = !show.value;
     }
-
-    const itemsPerPage = ref(10);
+    function tranactionColor(item) {
+      if (item < 0) return "red";
+      else return "green";
+    }
+    const itemsPerPage = 12;
     const headers = [
       { title: "Date of transfer", key: "date" },
-      { title: "Amount", key: "amount" },
+      { title: "Transaction amount in $", key: "amount" },
     ];
     const store = useStore();
 
-    function loadData() {
-      return store.dispatch("user/loadUserMovements");
+    async function loadData() {
+      loading.value = true;
+      await store.dispatch("user/loadUserMovements");
+      loading.value = false;
+      return;
     }
     const userMovements = computed(function () {
       if (store.getters["auth/isLoggedIn"]) {
         const movementsObj = store.getters["user/getUserMovements"];
+
         return Object.values(movementsObj);
       } else {
         return [];
@@ -104,12 +109,9 @@ export default {
       show,
       toggleMovements,
       buttonName,
+      tranactionColor,
+      loading,
     };
   },
 };
 </script>
-<style scoped>
-.component-container {
-  margin: 10px;
-}
-</style>
