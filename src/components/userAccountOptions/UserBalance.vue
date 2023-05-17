@@ -5,7 +5,7 @@
       <v-row class="justify-end">
         <span>As of {{ today }}</span>
         <v-spacer></v-spacer>
-        <span class="right">{{ balance }} $</span>
+        <span class="right text-h5">{{ balance }} $</span>
       </v-row>
     </v-card-text>
   </v-card>

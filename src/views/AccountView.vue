@@ -1,5 +1,5 @@
 <template>
-  <v-container class="ma-3">
+  <v-container class="ma-3 text-center">
     <v-btn
       class="ma-3"
       @click="
