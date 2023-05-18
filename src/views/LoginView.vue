@@ -27,14 +27,7 @@
         @input="v$.password.$touch"
         @blur="v$.password.$touch"
       ></v-text-field>
-      <v-btn
-        class="me-4"
-        @click="
-          v$.$validate();
-          submitForm();
-        "
-        >submit</v-btn
-      >
+      <v-btn class="me-4" @click="submitForm()">submit</v-btn>
     </form>
   </v-container>
 </template>
@@ -67,31 +60,27 @@ export default defineComponent({
 
     const rules = {
       email: { required, email },
-      password: { required },
+      password: { required, validate: (value) => value.length >= 6 || null },
     };
 
     const v$ = useVuelidate(rules, state);
 
     async function submitForm() {
+      console.log(v$.value.$error);
       if (v$.value.$error) {
         warning.value = true;
         return;
       } else {
         warning.value = false;
         isLoading.value = true;
-
         try {
+          console.log(state);
           await store.dispatch("auth/login", state);
-          router.push("/");
+          router.replace("/");
+          emitSubmit();
         } catch (error) {
-          if (error) {
-            warning.value = true;
-          } else {
-            warning.value = false;
-          }
-        } finally {
+          warning.value = true;
           isLoading.value = false;
-          emitSubmit()
         }
       }
     }

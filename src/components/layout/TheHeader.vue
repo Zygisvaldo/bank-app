@@ -1,6 +1,5 @@
 <template>
   <NavigationBar />
-  
 </template>
 
 <script>

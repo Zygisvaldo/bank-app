@@ -1,7 +1,7 @@
 <template>
-  <section class="my-0 py-0">
-    <div class="section__title">
-      <h3 class="section__header">
+  <section class="my-4 pb-4">
+    <div class="section__title" style="width: 800px">
+      <h3 class="section__header" style="font-size: 42px">
         The best day to join Bankist was one year ago. The second best is today!
       </h3>
     </div>
@@ -23,3 +23,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+section {
+  transform: scale(0.8);
+}
+</style>

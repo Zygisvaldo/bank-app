@@ -2,12 +2,20 @@ import axios from "axios";
 
 export default {
   async loadUserMovements(context) {
-    const userId = context.rootState.auth.userId;
-    const token = context.rootState.auth.token;
-    const url = `https://bankistvue-default-rtdb.firebaseio.com/bankists/${userId}.json?auth=${token}`;
-    const response = await axios(url);
-    const payload = response.data;
-    context.commit("setUserMovements", payload);
+    try {
+      const userId = context.rootState.auth.userId;
+      const token = context.rootState.auth.token;
+      const url = `https://bankistvue-default-rtdb.firebaseio.com/bankists/${userId}.json?auth=${token}`;
+      const response = await axios(url);
+      console.log(response);
+      let payload = response.data;
+      if (payload === null) {
+        return;
+      }
+      context.commit("setUserMovements", payload);
+    } catch (error) {
+      console.log(error);
+    }
   },
   async transferMonay(context, payload) {
     try {

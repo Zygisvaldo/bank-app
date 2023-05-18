@@ -2,13 +2,20 @@
   <nav>
     <v-toolbar flat app>
       <v-btn icon="mdi-menu" @Click="toogleNavigation"></v-btn>
-      <v-toolbar-title class="text-uppercase grey--text">
+      <v-toolbar-title @Click="goHome" class="text-uppercase grey--text">
         <span>Bankist</span>
         <Span class="font-weight-light">app</Span>
       </v-toolbar-title>
-      <v-img src="../../assets/logo.png" alt="Logo" class="logo" height="50" />
+      <v-img
+        
+        src="../../assets/logo.png"
+        alt="Logo"
+        class="logo"
+        height="50"
+      />
       <v-spacer></v-spacer>
       <div class="container-width">
+        <SignUpPopup v-if="!userIsLoogedIn" />
         <LogInPopup class="button-width" v-if="!userIsLoogedIn" />
         <v-btn v-else @click="logOut" color="success" class="button-width"
           >Log Out</v-btn
@@ -45,9 +52,11 @@ import { ref, reactive, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import LogInPopup from "./LogInPopup.vue";
+import SignUpPopup from "./SingUpPopup.vue";
 export default {
   components: {
     LogInPopup,
+    SignUpPopup,
   },
   setup() {
     const router = useRouter();
@@ -55,6 +64,9 @@ export default {
     const userIsLoogedIn = computed(function () {
       return store.getters["auth/isLoggedIn"];
     });
+    function goHome() {
+      router.push("/");
+    }
     const navigationOptionsGeneral = reactive([
       {
         icon: "mdi-home",
@@ -83,10 +95,10 @@ export default {
     ]);
 
     const filteredNavigationOptions = computed(() => {
-  return userIsLoogedIn.value
-    ? navigationOptionsGeneral.filter((item) => item.showWhenUserLoggedIn)
-    : navigationOptionsGeneral.filter((item) => !item.showWhenUserLoggedIn);
-});
+      return userIsLoogedIn.value
+        ? navigationOptionsGeneral.filter((item) => item.showWhenUserLoggedIn)
+        : navigationOptionsGeneral.filter((item) => !item.showWhenUserLoggedIn);
+    });
 
     const navIsOpen = ref(false);
     function toogleNavigation() {
@@ -103,6 +115,7 @@ export default {
       filteredNavigationOptions,
       userIsLoogedIn,
       logOut,
+      goHome,
     };
   },
 };
@@ -110,7 +123,7 @@ export default {
 
 <style scoped>
 .container-width {
-  width: 100px;
+  width: 180px;
   display: flex;
   align-items: center;
 }

@@ -93,16 +93,17 @@ export default {
       loading.value = false;
       return;
     }
+
     const userMovements = computed(function () {
+      console.log(store.getters["auth/isLoggedIn"], "a");
       if (store.getters["auth/isLoggedIn"]) {
         const movementsObj = store.getters["user/getUserMovements"];
-
+        console.log(movementsObj);
         return Object.values(movementsObj);
       } else {
         return [];
       }
     });
-    console.log(userMovements.value);
 
     return {
       loadData,

@@ -24,5 +24,20 @@
       </li>
     </ul>
     <v-img src="../../assets/img/icon.png" alt="Logo" class="footer__logo" />
+    <p class="footer__copyright">
+      &copy; Copyright by
+      <a
+        class="footer__link twitter-link"
+        target="_blank"
+        href="https://linkedin.com/in/zigy-vaitkunas-51923088"
+        >Žygimantas Vaitkūnas</a
+      >. Used for learning and portfolio. Don't use to teach. Don't claim as
+      your own product.
+    </p>
   </div>
 </template>
+<style scoped>
+div {
+  transform: scale(0.55);
+}
+</style>

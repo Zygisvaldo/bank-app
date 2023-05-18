@@ -1,12 +1,12 @@
 <template>
   <div class="section my-0 py-15">
-    <div class="section__title mb-0">
+    <div class="section__title mb-0 py-0">
       <h2 class="section__description">Operations</h2>
-      <h3 class="section__header py-0">
+      <h3 class="section__header ">
         Everything as simple as possible, but no simpler.
       </h3>
     </div>
-    <section class="container mt-0 pt-0 pb-4">
+    <section class="container mt-0 mb-4 pt-0 pb-4">
       <div class="operations">
         <div class="operations__tab-container">
           <button
@@ -51,7 +51,13 @@
             'operations__content--active': isActive1,
           }"
         >
-          <div class="operations__icon operations__icon--1"></div>
+          <div class="operations__icon operations__icon--1">
+            <v-icon
+              size="large"
+              color="yellow-darken-2"
+              icon="mdi-upload"
+            ></v-icon>
+          </div>
           <h5 class="operations__header">
             Tranfser money to anyone, instantly! No fees, no BS.
           </h5>
@@ -71,7 +77,13 @@
             'operations__content--active': isActive2,
           }"
         >
-          <div class="operations__icon operations__icon--2"></div>
+          <div class="operations__icon operations__icon--2">
+            <v-icon
+              size="large"
+              color="green-darken-2"
+              icon="mdi-home"
+            ></v-icon>
+          </div>
           <h5 class="operations__header">
             Buy a home or make your dreams come true, with instant loans.
           </h5>
@@ -90,7 +102,13 @@
             'operations__content--active': isActive3,
           }"
         >
-          <div class="operations__icon operations__icon--3"></div>
+          <div class="operations__icon operations__icon--3">
+            <v-icon
+              size="large"
+              color="red-darken-2"
+              icon="mdi-account"
+            ></v-icon>
+          </div>
           <h5 class="operations__header">
             No longer need your account? No problem! Close it instantly.
           </h5>
@@ -135,9 +153,9 @@ export default {
 </script>
 <style scoped>
 .operations {
+  transform: scale(0.8);
   max-width: 100rem;
-  margin: 12rem auto 0 auto;
-
+  margin: 8rem auto 0 auto;
   background-color: #fff;
 }
 .operations__tab-container {

@@ -1,14 +1,12 @@
 <template>
-  <div class="section pt-15 pb-10">
+  <div class="section py-15">
     <div flat class="section__title section__title--testimonials">
       <h2 class="section__description">Not sure yet?</h2>
       <h3 class="section__header">
         Millions of Bankists are already making their lifes simpler.
       </h3>
     </div>
-    <br />
-
-    <v-card flat rounded="0">
+    <v-card class="card-section" flat rounded="0">
       <v-window v-model="onboarding">
         <v-window-item v-for="n in length" :key="`card-${n}`" :value="n">
           <v-card flat class="d-flex justify-center align-center flex-column">
@@ -108,3 +106,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.card-section {
+  transform: scale(0.78);
+}
+</style>

@@ -94,7 +94,7 @@
   </v-container>
 </template>
 <script>
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import { email, required } from "@vuelidate/validators";
 import { useRouter } from "vue-router";
@@ -121,11 +121,20 @@ export default {
       ...initialState,
     });
 
+    watch(state, function () {
+      warning.value = false;
+      singUpError.value = false;
+      v$.value.$reset();
+    });
+
     const rules = {
       firstName: { required },
       lastName: { required },
       email: { required, email },
-      password: { required },
+      password: {
+        required,
+        validate: (value) => value.length >= 6 || null,
+      },
       password2: {
         required,
         $message: "Passwords do not match",
@@ -151,20 +160,30 @@ export default {
         return;
       } else {
         warning.value = false;
+        singUpError.value = false;
         try {
           await store.dispatch("auth/signup", state);
+          router.replace("/");
         } catch (error) {
-          if (error) {
-            singUpError.value = true;
-          } else {
-            warning.value = false;
-            router.push("/");
-          }
+          singUpError.value = true;
         }
       }
     }
 
-    return { state, clear, v$, submitForm, success, warning, singUpError };
+    function getErrorMessages(field) {
+      const errors = v$[field].$errors;
+      return errors.map((error) => error.$message);
+    }
+    return {
+      getErrorMessages,
+      state,
+      clear,
+      v$,
+      submitForm,
+      success,
+      warning,
+      singUpError,
+    };
   },
 };
 </script>

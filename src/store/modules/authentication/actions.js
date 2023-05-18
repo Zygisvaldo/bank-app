@@ -3,7 +3,6 @@ let timer;
 
 export default {
   async login(context, payload) {
-    console.log(payload);
     return context.dispatch("auth", {
       ...payload,
       mode: "login",
@@ -60,7 +59,6 @@ export default {
       throw new Error(errorMessage);
     }
     context.dispatch("user/loadUserMovements", null, { root: true });
-    console.log("user movements set");
   },
   tryLogin(context) {
     const token = localStorage.getItem("token");
@@ -93,7 +91,6 @@ export default {
       userId: null,
       loggedIn: false,
     });
-    console.log(context.sta);
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("tokenExpiration");

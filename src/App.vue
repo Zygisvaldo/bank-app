@@ -59,6 +59,7 @@ export default {
 html {
   font-size: 62.5%;
   box-sizing: border-box;
+  background-color: #f3f3f3;
 }
 
 body {
@@ -70,9 +71,8 @@ body {
 }
 
 .section {
-  padding: 15rem 3rem;
+  padding: 10rem 3rem;
   border-top: 1px solid #ddd;
-
   transition: transform 1s, opacity 1s;
 }
 
@@ -243,8 +243,6 @@ h4 {
   width: 100%;
 }
 
-
-
 .features__icon {
   display: flex;
   align-items: center;
@@ -271,7 +269,6 @@ h4 {
 .testimonial {
   width: 65%;
   position: relative;
- 
 }
 
 .testimonial::before {
