@@ -49,7 +49,10 @@ import { useRouter } from "vue-router";
 export default defineComponent({
   name: "LoginView",
 
-  setup() {
+  setup(_, context) {
+    const emitSubmit = () => {
+      context.emit("submit");
+    };
     const store = useStore();
     const warning = ref(false);
     const isLoading = ref(false);
@@ -76,6 +79,7 @@ export default defineComponent({
       } else {
         warning.value = false;
         isLoading.value = true;
+
         try {
           await store.dispatch("auth/login", state);
           router.push("/");
@@ -87,6 +91,7 @@ export default defineComponent({
           }
         } finally {
           isLoading.value = false;
+          emitSubmit()
         }
       }
     }

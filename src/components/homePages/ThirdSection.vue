@@ -1,42 +1,48 @@
 <template>
-  <div flat class="section__title section__title--testimonials">
-    <h2 class="section__description">Not sure yet?</h2>
-    <h3 class="section__header">
-      Millions of Bankists are already making their lifes simpler.
-    </h3>
+  <div class="section pt-15 pb-10">
+    <div flat class="section__title section__title--testimonials">
+      <h2 class="section__description">Not sure yet?</h2>
+      <h3 class="section__header">
+        Millions of Bankists are already making their lifes simpler.
+      </h3>
+    </div>
     <br />
+
     <v-card flat rounded="0">
       <v-window v-model="onboarding">
         <v-window-item v-for="n in length" :key="`card-${n}`" :value="n">
-          <v-card class="d-flex justify-center align-center flex-column">
+          <v-card flat class="d-flex justify-center align-center flex-column">
             <div class="slider">
               <div class="slide slide--1">
-                <div class="testimonial">
-                  <h5 class="testimonial__header">
-                    Best financial decision ever!
-                  </h5>
-                  <blockquote class="testimonial__text">
-                    {{ slides1[n - 1].text }}
-                  </blockquote>
-                  <address class="testimonial__author">
-                    <v-img
-                      src="../../assets/img/user-2.jpg"
-                      class="testimonial__photo"
-                    />
-                    <h6 class="testimonial__name">
+                <section
+                  class="container d-flex justify-center align-center flex-column"
+                >
+                  <div class="testimonial">
+                    <h5 class="testimonial__header">
                       {{ slides1[n - 1].title }}
-                    </h6>
-                    <p class="testimonial__location">
-                      {{ slides1[n - 1].location }}
-                    </p>
-                  </address>
-                </div>
+                    </h5>
+                    <blockquote class="testimonial__text">
+                      {{ slides1[n - 1].text }}
+                    </blockquote>
+                    <address class="testimonial__author">
+                      <v-img
+                        src="../../assets/img/user-2.jpg"
+                        class="testimonial__photo"
+                      />
+                      <h6 class="testimonial__name">
+                        {{ slides1[n - 1].name }}
+                      </h6>
+                      <p class="testimonial__location">
+                        {{ slides1[n - 1].location }}
+                      </p>
+                    </address>
+                  </div>
+                </section>
               </div>
             </div>
           </v-card>
         </v-window-item>
       </v-window>
-
       <v-card-actions class="justify-space-between">
         <v-btn variant="plain" icon="mdi-chevron-left" @click="prev"></v-btn>
         <v-item-group v-model="onboarding" class="text-center" mandatory>

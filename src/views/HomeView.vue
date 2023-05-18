@@ -1,18 +1,20 @@
 <template>
-  <TopPage />
-  <section  id="section--1">
+  <section>
+    <TopPage />
+  </section>
+  <section id="section--1">
     <FirstSection />
   </section>
-  <section  id="section--2">
+  <section id="section--2">
     <SecondSection />
   </section>
-  <section  id="section--3">
+  <section class="slider" id="section--3">
     <ThirdSection />
   </section>
-  <section class=" section--sign-up">
+  <section class="section--sign-up">
     <SignUpSection />
   </section>
-  <footer class="footer">
+  <footer class="footer ">
     <FooterSection />
   </footer>
 </template>

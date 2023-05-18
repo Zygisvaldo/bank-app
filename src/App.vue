@@ -2,7 +2,6 @@
   <v-app>
     <v-main>
       <TheHeader />
-
       <router-view />
     </v-main>
   </v-app>
@@ -85,10 +84,12 @@ body {
 .section__title {
   max-width: 80rem;
   margin: 0 auto 8rem auto;
+  align-content: center;
+  width: 800px;
 }
 
 .section__description {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 600;
   text-transform: uppercase;
   color: var(--color-primary);
@@ -242,12 +243,7 @@ h4 {
   width: 100%;
 }
 
-.features__feature {
-  align-self: center;
-  justify-self: center;
-  width: 70%;
-  font-size: 1rem;
-}
+
 
 .features__icon {
   display: flex;
@@ -275,6 +271,7 @@ h4 {
 .testimonial {
   width: 65%;
   position: relative;
+ 
 }
 
 .testimonial::before {

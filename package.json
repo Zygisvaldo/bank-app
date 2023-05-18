@@ -35,6 +35,7 @@
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
     "vue-cli-plugin-vuetify": "~2.5.8",
+    "vue-svg-loader": "^0.16.0",
     "webpack-plugin-vuetify": "^2.0.0-alpha.0"
   },
   "eslintConfig": {

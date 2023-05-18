@@ -93,6 +93,7 @@ export default {
       userId: null,
       loggedIn: false,
     });
+    console.log(context.sta);
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("tokenExpiration");

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="ma-3 text-center">
+  <v-container>
     <v-btn
       class="ma-3"
       @click="
@@ -10,8 +10,10 @@
       >{{ buttonName }} account information</v-btn
     >
     <v-card v-if="show" class="ma-3 pa-5"><UserBalance /></v-card>
-
-    <v-card v-if="show" class="ma-3 pa-2">
+    <v-card
+      v-if="show"
+      class="ma-3 pa-2 d-flex justify-center align-center flex-column"
+    >
       <v-row no-gutters>
         <v-col class="ma-4" cols="12" lg="8" xl="8">
           <v-data-table
@@ -28,17 +30,17 @@
         <v-col class="ma-2" cols="8" lg="3" xl="3">
           <v-row class="ma-3" no-gutters>
             <div class="component-container">
-              <BankLoan class="bg-green-lighten-3 text-black" />
+              <BankLoan class="bg-green-accent-4 text-black" />
             </div>
           </v-row>
           <v-row class="ma-3 gray" no-gutters>
             <div class="component-container">
-              <BankTransfer class="bg-yellow-lighten-3 text-black" />
+              <BankTransfer class="bg-yellow-accent-3 text-black" />
             </div>
           </v-row>
           <v-row class="ma-3 gray" no-gutters>
             <div class="component-container">
-              <BankAccountClose class="bg-red-lighten-2 text-black" />
+              <BankAccountClose class="bg-red-accent-3 text-black" />
             </div>
           </v-row>
         </v-col>
@@ -46,6 +48,7 @@
     </v-card>
   </v-container>
 </template>
+
 <script>
 import { useStore } from "vuex";
 import { computed, ref } from "vue";

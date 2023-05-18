@@ -8,45 +8,33 @@
       </v-toolbar-title>
       <v-img src="../../assets/logo.png" alt="Logo" class="logo" height="50" />
       <v-spacer></v-spacer>
+      <div class="container-width">
+        <LogInPopup class="button-width" v-if="!userIsLoogedIn" />
+        <v-btn v-else @click="logOut" color="success" class="button-width"
+          >Log Out</v-btn
+        >
+      </div>
     </v-toolbar>
-
     <v-navigation-drawer app v-model="navIsOpen">
-      <v-list v-if="!userIsLoogedIn">
+      <v-list>
         <v-list-subheader>Main menu</v-list-subheader>
-        <v-list-item
-          v-for="selection in navigationOptionsGeneral"
-          :key="selection.text"
-          router
-          :to="selection.route"
-        >
-          <v-list-item-tile-action>
-            <v-icon>{{ selection.icon }}</v-icon>
-          </v-list-item-tile-action>
-          <v-list-tile-content>
-            <v-list-item-tile-title>{{
-              selection.text
-            }}</v-list-item-tile-title>
-          </v-list-tile-content>
-        </v-list-item>
-      </v-list>
-      <v-list v-else>
-        <v-list-subheader>Main menu</v-list-subheader>
-        <v-list-item
-          v-for="selection in navigationOptionsLoggedIn"
-          :key="selection.text"
-          router
-          :to="selection.route"
-        >
-          <v-list-item-tile-action>
-            <v-icon>{{ selection.icon }}</v-icon>
-          </v-list-item-tile-action>
-          <v-list-tile-content>
-            <v-list-item-tile-title>{{
-              selection.text
-            }}</v-list-item-tile-title>
-          </v-list-tile-content>
-        </v-list-item>
-        <v-btn @click="logOut">logout</v-btn>
+        <v-conaitner>
+          <v-list-item
+            v-for="selection in filteredNavigationOptions"
+            :key="selection.text"
+            router
+            :to="selection.route"
+          >
+            <v-list-item-tile-action>
+              <v-icon>{{ selection.icon }}</v-icon>
+            </v-list-item-tile-action>
+            <v-list-tile-content>
+              <v-list-item-tile-title>{{
+                selection.text
+              }}</v-list-item-tile-title>
+            </v-list-tile-content>
+          </v-list-item>
+        </v-conaitner>
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -55,8 +43,14 @@
 <script>
 import { ref, reactive, computed } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+import LogInPopup from "./LogInPopup.vue";
 export default {
+  components: {
+    LogInPopup,
+  },
   setup() {
+    const router = useRouter();
     const store = useStore();
     const userIsLoogedIn = computed(function () {
       return store.getters["auth/isLoggedIn"];
@@ -66,46 +60,62 @@ export default {
         icon: "mdi-home",
         text: "Home",
         route: "/",
+        showWhenUserLoggedIn: true,
       },
       {
         icon: "mdi-import",
         text: "Log In",
         route: "/login",
+        showWhenUserLoggedIn: false,
       },
       {
         icon: "mdi-import",
         text: "Sign Up",
         route: "/signup",
-      },
-    ]);
-    const navigationOptionsLoggedIn = reactive([
-      {
-        icon: "mdi-home",
-        text: "Home",
-        route: "/",
+        showWhenUserLoggedIn: false,
       },
       {
         icon: "mdi-account",
         text: "My Account",
         route: "/account",
+        showWhenUserLoggedIn: true,
       },
     ]);
+
+    const filteredNavigationOptions = computed(() => {
+  return userIsLoogedIn.value
+    ? navigationOptionsGeneral.filter((item) => item.showWhenUserLoggedIn)
+    : navigationOptionsGeneral.filter((item) => !item.showWhenUserLoggedIn);
+});
+
     const navIsOpen = ref(false);
     function toogleNavigation() {
       return (navIsOpen.value = !navIsOpen.value);
     }
     function logOut() {
+      router.push("/");
       store.dispatch("auth/logout");
     }
-
     return {
       toogleNavigation,
       navIsOpen,
       navigationOptionsGeneral,
-      navigationOptionsLoggedIn,
+      filteredNavigationOptions,
       userIsLoogedIn,
       logOut,
     };
   },
 };
 </script>
+
+<style scoped>
+.container-width {
+  width: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.button-width {
+  flex: 1;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="bg-red-lighten-4">
+  <v-card class="bg-light-blue-accent-3">
     <v-card-title class="headline ma-2">Account balance</v-card-title>
     <v-card-text class="card-text ma-2">
       <v-row class="justify-end">

@@ -15,6 +15,13 @@
       title="warning"
       text="Please fill the form correctly!"
     ></v-alert>
+    <v-alert
+      v-if="singUpError"
+      color="error"
+      icon="$warning"
+      title="Error"
+      :text="`${state.email} - Such email already exists!`"
+    ></v-alert>
     <br />
     <form>
       <v-text-field
@@ -79,7 +86,7 @@
           v$.$validate();
           submitForm();
         "
-        >submit</v-btn
+        >Sign Up</v-btn
       >
 
       <v-btn @click="clear"> clear </v-btn>
@@ -91,13 +98,15 @@ import { reactive, ref } from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import { email, required } from "@vuelidate/validators";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 export default {
   setup() {
     const router = useRouter();
-
+    const store = useStore();
     const success = ref(false);
     const warning = ref(false);
+    const singUpError = ref(false);
 
     const initialState = {
       firstName: "",
@@ -130,28 +139,32 @@ export default {
     function clear() {
       v$.value.$reset();
       warning.value = false;
-
+      singUpError.value = false;
       for (const [key, value] of Object.entries(initialState)) {
         state[key] = value;
       }
     }
 
-    function submitForm() {
+    async function submitForm() {
       if (v$.value.$error) {
         warning.value = true;
         return;
       } else {
         warning.value = false;
-        success.value = true;
-        //clear();
-        setTimeout(function () {
-          success.value = false;
-          router.push("/login");
-        }, 2000);
+        try {
+          await store.dispatch("auth/signup", state);
+        } catch (error) {
+          if (error) {
+            singUpError.value = true;
+          } else {
+            warning.value = false;
+            router.push("/");
+          }
+        }
       }
     }
 
-    return { state, clear, v$, submitForm, success, warning };
+    return { state, clear, v$, submitForm, success, warning, singUpError };
   },
 };
 </script>
